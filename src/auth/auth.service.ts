@@ -17,23 +17,26 @@ export class AuthService {
     try {
       const createdUser = await this.userService.createUser(createUserDto);
       createdUser.password = undefined;
-      await this.emailService.sendMail({
-        to: createUserDto.email,
-        subject: 'welcome ',
-        text: 'welcome to kangho world',
-      });
+      console.log(createdUser);
+      // await this.emailService.sendMail({
+      //   to: createUserDto.email,
+      //   subject: 'welcome ',
+      //   text: 'welcome to kangho world',
+      // });
       return createdUser;
     } catch (error) {
-      if (error?.code === 23505) {
+      console.log(typeof error?.code);
+      if (error?.code === '23505') {
         throw new HttpException(
           'user with that email alreadu exists',
           HttpStatus.BAD_REQUEST,
         );
+      } else {
+        throw new HttpException(
+          'something went wrong',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
-      throw new HttpException(
-        'something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
     }
   }
 

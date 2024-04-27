@@ -10,6 +10,7 @@ export class AuthController {
   // 회원가입
   @Post('/signup')
   async registerUser(@Body() createUserDto: CreateUserDto) {
+    // console.log(createUserDto);
     return await this.authService.signupUser(createUserDto);
   }
 
